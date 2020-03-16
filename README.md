@@ -1,7 +1,7 @@
 # COVID-19 Dashboard using Lightning Web Components
 
 ## Try App 
-[click me](https://developer.salesforce.com/docs/component-library/tools/playground/Fb_Jo52B/10/edit)
+[click me](https://developer.salesforce.com/docs/component-library/tools/playground/Fb_Jo52B/11/edit)
 
 ## Things you will learn
 - Data Binding
