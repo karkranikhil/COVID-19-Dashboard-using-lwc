@@ -1,7 +1,7 @@
 # COVID-19 Dashboard using Lightning Web Components
 
 ## Try App 
-[click me](https://developer.salesforce.com/docs/component-library/tools/playground/Fb_Jo52B/9/edit)
+[click me](https://developer.salesforce.com/docs/component-library/tools/playground/Fb_Jo52B/10/edit)
 
 ## Things you will learn
 - Data Binding
@@ -19,8 +19,8 @@
 ## Below is the screenshots of the App
 
 ### Main Page
-<img src=""/>
+<img src="https://raw.githubusercontent.com/karkranikhil/COVID-19-Dashboard-usin-lwc/master/Main%20view.PNG"/>
 ### List View
-<img src=""/>
+<img src="https://raw.githubusercontent.com/karkranikhil/COVID-19-Dashboard-usin-lwc/master/list_view.PNG"/>
 ### Chart View
-<img src=""/>
+<img src="https://raw.githubusercontent.com/karkranikhil/COVID-19-Dashboard-usin-lwc/master/chart_view.PNG"/>
