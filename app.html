@@ -1,0 +1,116 @@
+<template>
+    <div class="app-container">
+      <!--Header-->
+        <header>COVID-19 Global Cases tracking using LWC </header>
+
+        <!--Total Cards-->
+        <div class="slds-m-top_large slds-p-left_small slds-p-right_small slds-grid slds-gutters slds-wrap space">
+            <div class="slds-col bg-primary slds-p-around_small slds-m-around_small">
+                <div class="slds-text-align_center slds-text-heading_medium white-color">Total Confirmed</div>
+                <div class="slds-text-align_center slds-text-heading_large white-color">{total.total_confirmed}</div>
+            </div>
+            <div class="slds-col bg-warning slds-p-around_small slds-m-around_small">
+                 <div class="slds-text-align_center slds-text-heading_medium white-color">Total Active</div>
+                 <div class="slds-text-align_center slds-text-heading_large white-color">{total.total_active}</div>
+            </div>
+            <div class="slds-col bg-success slds-p-around_small slds-m-around_small">
+                <div class="slds-text-align_center slds-text-heading_medium white-color">Total Recovered</div>
+                <div class="slds-text-align_center slds-text-heading_large white-color">{total.total_recovered}</div>
+            </div>
+            <div class="slds-col bg-danger slds-p-around_small slds-m-around_small">
+                <div class="slds-text-align_center slds-text-heading_medium white-color">Total Deaths</div>
+                <div class="slds-text-align_center slds-text-heading_large white-color">{total.total_deaths}</div>
+            </div>
+            <div class="slds-col bg-info slds-p-around_small slds-m-around_small">
+                <div class="slds-text-align_center slds-text-heading_medium white-color">Fatality Rate</div>
+                <div class="slds-text-align_center slds-text-heading_large white-color">{total.total_fatality_rate}</div>
+            </div>
+            <div class="slds-col bg-secondary slds-p-around_small slds-m-around_small">
+                <div class="slds-text-align_center slds-text-heading_medium white-color">Recovery Rate</div>
+                <div class="slds-text-align_center slds-text-heading_large white-color">{total.total_recovery_rate}</div>
+            </div>
+        </div>
+        <!--Card for heading and toggle view-->
+        <div class="slds-m-left_medium slds-m-right_medium">
+          <div class="slds-p-around_medium lgc-bg">
+          <div class="box-container">
+                <h1>COVID Data by country</h1>
+                <div class="toggle-container">
+                  
+                <div data-name="LIST" class={isListSelected} onclick={listHandler}>List</div>
+                <div data-name="CHART" class={isChartSelected} onclick={listHandler}>Chart</div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- SHow charts if showListView is false-->
+        <template if:false={showListView}>
+        <div class="slds-m-left_medium slds-m-right_medium slds-m-left_medium slds-m-bottom_medium">
+          <div class="slds-p-around_medium lgc-bg">
+             <label class="label-text">Select Your country</label>
+            <lightning-combobox
+            name="country"
+            label="country"
+            value={countrySelected}
+            placeholder="Select Your country"
+            options={countryList}
+            variant="label-hidden"
+            onchange={handleCountryChange} ></lightning-combobox>
+          </div>
+        </div>
+        <div class="chartContainer" lwc:dom="manual"></div>
+        </template>
+
+        <!-- SHow charts if showListView is true-->
+        <template if:true={showListView}>
+        
+        <div class="slds-m-left_medium slds-m-right_medium slds-m-left_medium slds-m-bottom_medium">
+          <div class="slds-p-around_medium lgc-bg">
+            <label class="label-text">Enter Your country Name</label>
+            <lightning-input  type="text" autocomplete="off" label="Enter Your country Name" variant="label-hidden" onkeyup={searchHandler}></lightning-input>
+            <span class="slds-badge slds-m-around_medium fatalityColumnClass-danger">Higher than Average Fatality</span>
+            <span class="slds-badge slds-m-around_medium recoveryColumnClass-success">Higher than Average Recovery</span>
+            <span class="slds-badge slds-m-around_medium recoveryColumnClass-warning">Lower than Average Recovery</span>
+            <span class="slds-badge slds-m-around_x-medium fatalityColumnClass-success">Lower than Average Fatality</span>
+            <span class="slds-badge slds-m-around_x-medium activeColumnClass">More Active than Recovered</span>
+            <span class="slds-badge slds-m-around_x-medium recoveredColumnClass">More Recovered than Active</span>
+        </div>
+<table class="table table-bordered ">
+    <thead>
+      <tr>					
+        <th>Country Name</th>
+        <th>Confirmed</th>
+        <th>Active</th>
+        <th>Recovered</th>
+        <th>Deaths</th>
+        <th>Fatality Rate</th>
+        <th>Recovery Rate</th>
+        <th>Last Updated</th>
+      </tr>
+    </thead>
+   
+    <tbody id="myTable">
+      <template for:each={filteredtableData}  for:item="item"> 
+        <tr key={item.Country_Region}>
+          <td class="countryName">{item.Country_Region}</td>
+          <td>{item.Confirmed}</td>
+          <td class={item.activeColumnClass}>{item.Active}</td>
+          <td class={item.recoveredColumnClass}>{item.Recovered}</td>
+          <td>{item.Deaths}</td>
+          <td class={item.fatalityColumnClass}>{item.Fatality_rate}</td>
+          <td class={item.recoveryColumnClass}>{item.Recovery_Rate}</td>
+          <td>{item.formatedDate}</td>
+        </tr>
+      </template>
+       <template if:false={filteredtableData.length}>
+         <div>No Data Found</div>
+       </template>
+     
+    </tbody>
+  </table>
+    </div>
+    </template>
+    <footer><span>Build by <a href="https://www.linkedin.com/in/nikhil-karkra-73a15319/" target="_blank">Nikhil Karkra</a></span><a class="slds-float_right" href="https://services9.arcgis.com/N9p5hsImWXAccRNI/arcgis/rest/services/Z7biAeD8PAkqgmWhxG2A/FeatureServer/1" target="_blank">Data Source</a></footer>
+    </div>
+    
+</template>
