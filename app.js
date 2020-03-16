@@ -31,7 +31,7 @@ get isListSelected(){
 
 /**component lifecycle **/
 connectedCallback(){
-        //this.fetchData()
+        this.fetchData()
 }
 
 renderedCallback() {
